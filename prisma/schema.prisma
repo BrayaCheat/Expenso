@@ -1,0 +1,67 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model Category {
+  id           String        @id @default(uuid()) @db.Uuid()
+  name         String
+  note         String?
+  userId       String        @db.Uuid()
+  transactions Transaction[]
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  @@map("category")
+}
+
+model Payment {
+  id           String        @id @default(uuid()) @db.Uuid()
+  name         String
+  note         String?
+  userId       String        @db.Uuid()
+  transactions Transaction[]
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  @@map("payment")
+}
+
+model Transaction {
+  id              String  @id @default(uuid()) @db.Uuid()
+  amount          Float
+  note            String?
+  userId          String  @db.Uuid()
+  transactionType String
+
+  paymentId String  @db.Uuid()
+  payment   Payment @relation(fields: [paymentId], references: [id])
+
+  categoryId String   @db.Uuid()
+  category   Category @relation(fields: [categoryId], references: [id])
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  @@index([categoryId])
+  @@index([paymentId])
+  @@index([userId])
+  //custom table name
+  @@map("transaction")
+}
