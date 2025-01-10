@@ -6,8 +6,13 @@ export default defineNuxtConfig({
     '@nuxtjs/tailwindcss',
     'shadcn-nuxt',
     '@nuxtjs/color-mode',
-    '@pinia/nuxt'
+    '@pinia/nuxt',
+    '@nuxt/image'
   ],
+  devServer: {
+    host: '0.0.0.0',
+    port: 9999
+  },
   compatibilityDate: '2025-01-10',
   ssr: false,
   runtimeConfig: {
