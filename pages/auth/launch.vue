@@ -39,7 +39,7 @@
     {
       label: 'I Already Have An Account',
       variant: 'outline',
-      action: () => alert('ok')
+      action: () => navigateTo('/auth/login')
     }
   ])
 </script>

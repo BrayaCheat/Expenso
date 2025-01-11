@@ -1,4 +1,4 @@
-import { supabase } from "~/shared/supabase"
+import { supabase } from "@/shared/supabase"
 
 export default defineNuxtRouteMiddleware(async (to, from) => {
     const {data: {session}} = await supabase.auth.getSession()
